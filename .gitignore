@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+outputs/
+outputs/**
+*.ipynb_checkpoints/
+.DS_Store
+.env
+.vscode/
+.venv/
+*.log
+*.sqlite3
+data/raw/*.zip
+outputs/.matplotlib/
