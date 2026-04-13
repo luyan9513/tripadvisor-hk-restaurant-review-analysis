@@ -11,6 +11,15 @@ This repository contains a reproducible pipeline for collecting, cleaning, analy
 - Benchmark baseline models for five-star review prediction.
 - Generate figures and summary tables for reporting and presentation.
 
+## Results / Highlights
+
+- The review corpus is strongly skewed toward 5-star ratings, with 9,693 five-star reviews out of 13,449 total reviews.
+- Higher price ranges are associated with stronger satisfaction signals: the five-star rate rises from 0.485 for `$` restaurants to 0.661 for `$$$$` restaurants.
+- Trip type also matters: business and friend-oriented reviews trend higher on average than solo, couple, or family visits.
+- Sentiment and emotion features show clear monotonic structure by rating. Lexicon sentiment rises from `-0.1887` at 1 star to `0.7460` at 5 stars, while `happy_ratio` increases and negative emotions decline.
+- The best baseline model is a combined XGBoost pipeline using text, metadata, and sentiment/emotion features, reaching `0.8509` accuracy, `0.8282` macro F1, `0.9093` ROC-AUC, and `0.9463` average precision.
+- Text plus structured features outperform metadata-only and sentiment-only baselines, which supports a hybrid modeling strategy for review classification.
+
 ## Repository Layout
 
 - `data/raw/`: source CSV files used by the pipeline.
