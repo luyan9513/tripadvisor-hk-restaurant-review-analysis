@@ -107,7 +107,15 @@ If you only want to refresh the crawler output, use the command above and skip t
 
 ## Optional Data Refresh
 
-If you have a TripAdvisor Scraper API key, you can refresh the raw CSV exports with the crawler.
+The crawler in this repository is built on top of the TripAdvisor Scraper project:
+`https://github.com/omkarcloud/tripadvisor-scraper`
+
+If you do not already have an API key, you can get one here:
+`https://www.omkar.cloud/auth/sign-up?redirect=/api-key`
+
+For more detailed API usage and endpoint documentation, refer to the upstream TripAdvisor Scraper repository README.
+
+If you already have a TripAdvisor Scraper API key, you can refresh the raw CSV exports with the crawler.
 
 The crawler reads credentials in this order:
 
