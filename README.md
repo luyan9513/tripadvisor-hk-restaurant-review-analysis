@@ -84,14 +84,32 @@ python scripts/visualize_sentiment_emotion.py
 
 ## Optional Data Refresh
 
-If you have a TripAdvisor Scraper API key, you can refresh the raw CSV exports:
+If you have a TripAdvisor Scraper API key, you can refresh the raw CSV exports with the crawler:
 
 ```bash
 export API_KEY=your_api_key
-python tripadvisor_hk_restaurants_reviews_crawl.py
+python tripadvisor_hk_restaurants_reviews_crawl.py \
+  --query "Hong Kong" \
+  --locale en-US \
+  --currency HKD \
+  --max-rest-pages 10 \
+  --max-review-pages 50 \
+  --sleep 0.6 \
+  --sort-by most_recent \
+  --restaurants-csv data/raw/hongkong_restaurants.csv \
+  --reviews-csv data/raw/hongkong_restaurant_reviews.csv
 ```
 
-The crawler writes the raw outputs to `data/raw/`.
+Optional filters:
+
+- `--lang en`: keep only reviews written in English.
+- `--since YYYY-MM-DD`: fetch reviews published on or after a given date.
+- `--rating-is N`: restrict the crawl to a specific rating.
+- `--traveler-type couples|family|solo|friends|business`: filter by traveler type.
+- `--keyword "service"`: filter reviews containing a keyword.
+- `--min-rating N`: limit the restaurant list to places above a minimum rating.
+
+The crawler writes the raw outputs to `data/raw/` and expects `API_KEY` to be set in the environment. You can also set `BASE_URL` if you are using a different scraper endpoint.
 
 ## Generated Outputs
 
