@@ -131,36 +131,29 @@ To see every available crawler parameter, run:
 python tripadvisor_hk_restaurants_reviews_crawl.py --help
 ```
 
-The most commonly used parameters are:
+The commonly used crawler parameters are:
 
-- `--query`: search term for the TripAdvisor location, usually `Hong Kong`.
-- `--locale`: language/region setting for the API request.
-- `--currency`: currency code used in restaurant results.
-- `--max-rest-pages`: maximum number of restaurant-list pages to crawl.
-- `--max-review-pages`: maximum number of review pages per restaurant.
-- `--sleep`: pause between requests to reduce rate-limit pressure.
-- `--sort-by`: review ordering, usually `most_recent`.
-- `--lang`: keep reviews in a specific language.
-- `--since`: restrict reviews to a date range starting point.
-- `--rating-is`: restrict reviews to a specific rating.
-- `--traveler-type`: filter by traveler type such as `couples` or `family`.
-- `--keyword`: filter reviews by keyword text.
-- `--min-rating`: restrict the restaurant list to a minimum rating.
-- `--restaurants-csv` and `--reviews-csv`: output file paths for the raw CSV exports.
-- `--base-url`: override the upstream scraper endpoint if needed.
+| Parameter | Purpose |
+| --- | --- |
+| `--query` | Search term for the TripAdvisor location, usually `Hong Kong`. |
+| `--locale` | Language or region setting for the API request. |
+| `--currency` | Currency code used in restaurant results. |
+| `--max-rest-pages` | Maximum number of restaurant-list pages to crawl. |
+| `--max-review-pages` | Maximum number of review pages per restaurant. |
+| `--sleep` | Pause between requests to reduce rate-limit pressure. |
+| `--sort-by` | Review ordering, usually `most_recent`. |
+| `--lang` | Keep reviews in a specific language. |
+| `--since` | Restrict reviews to a date range starting point. |
+| `--rating-is` | Restrict reviews to a specific rating. |
+| `--traveler-type` | Filter by traveler type such as `couples` or `family`. |
+| `--keyword` | Filter reviews by keyword text. |
+| `--min-rating` | Restrict the restaurant list to a minimum rating. |
+| `--restaurants-csv` / `--reviews-csv` | Output file paths for the raw CSV exports. |
+| `--base-url` | Override the upstream scraper endpoint if needed. |
 
 ```bash
 python tripadvisor_hk_restaurants_reviews_crawl.py
 ```
-
-Optional filters:
-
-- `--lang en`: keep only reviews written in English.
-- `--since YYYY-MM-DD`: fetch reviews published on or after a given date.
-- `--rating-is N`: restrict the crawl to a specific rating.
-- `--traveler-type couples|family|solo|friends|business`: filter by traveler type.
-- `--keyword "service"`: filter reviews containing a keyword.
-- `--min-rating N`: limit the restaurant list to places above a minimum rating.
 
 The crawler writes the raw outputs to `data/raw/`. You can also set `BASE_URL` in `.env` or pass `--base-url` if you are using a different scraper endpoint.
 
