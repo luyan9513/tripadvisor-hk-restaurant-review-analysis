@@ -48,39 +48,57 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Reproducible Workflow
+## Usage
 
-Run the scripts in this order:
+The full pipeline can be run end to end in this order:
 
-1. Prepare the modeling datasets:
+1. Refresh the raw data if needed.
+
+```bash
+export API_KEY=your_api_key
+python tripadvisor_hk_restaurants_reviews_crawl.py \
+  --query "Hong Kong" \
+  --locale en-US \
+  --currency HKD \
+  --max-rest-pages 10 \
+  --max-review-pages 50 \
+  --sleep 0.6 \
+  --sort-by most_recent \
+  --restaurants-csv data/raw/hongkong_restaurants.csv \
+  --reviews-csv data/raw/hongkong_restaurant_reviews.csv
+```
+
+2. Build the cleaned and analysis-ready datasets.
 
 ```bash
 python scripts/prepare_modeling_data.py
 ```
 
-2. Generate exploratory analysis outputs:
+3. Run exploratory analysis.
 
 ```bash
 python scripts/run_eda.py
 ```
 
-3. Add sentiment and emotion features:
+4. Extract sentiment and emotion features.
 
 ```bash
 python scripts/extract_sentiment_emotion_features.py
 ```
 
-4. Train baseline models:
+5. Train baseline classification models.
 
 ```bash
 python scripts/train_baseline_models.py
 ```
 
-5. Produce the sentiment/emotion visualization summary:
+6. Generate sentiment and emotion visual summaries.
 
 ```bash
 python scripts/visualize_sentiment_emotion.py
 ```
+
+If you only want to refresh the crawler output, use the command above and skip the downstream scripts. If the raw CSV files already exist in `data/raw/`, you can start directly from step 2.
 
 ## Optional Data Refresh
 
