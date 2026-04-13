@@ -6,11 +6,34 @@ import re
 import time
 import argparse
 from typing import Dict, Any, List, Optional
+from pathlib import Path
 
 import requests
 import pandas as pd
 
 DEFAULT_BASE_URL = "https://tripadvisor-scraper-api.omkar.cloud/tripadvisor"
+ROOT_DIR = Path(__file__).resolve().parent
+ENV_FILE = ROOT_DIR / ".env"
+
+
+def load_local_env_file(path: Path) -> None:
+    if not path.exists():
+        return
+
+    try:
+        for raw_line in path.read_text(encoding="utf-8").splitlines():
+            line = raw_line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            if line.startswith("export "):
+                line = line[len("export ") :]
+            key, value = line.split("=", 1)
+            key = key.strip()
+            value = value.strip().strip('"').strip("'")
+            if key and key not in os.environ:
+                os.environ[key] = value
+    except OSError:
+        return
 
 
 def parse_entity_id_from_link(link: str) -> Optional[int]:
@@ -188,6 +211,8 @@ def normalize_review_row(review: Dict[str, Any], rest: Dict[str, Any]) -> Dict[s
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--api-key", default=None)
+    parser.add_argument("--base-url", default=None)
     parser.add_argument("--query", default="Hong Kong")
     parser.add_argument("--locale", default="en-US")
     parser.add_argument("--currency", default="HKD")
@@ -205,11 +230,14 @@ def main():
     parser.add_argument("--reviews-csv", default="data/raw/hongkong_restaurant_reviews.csv")
     args = parser.parse_args()
 
-    api_key = os.getenv("API_KEY")
-    if not api_key:
-        raise SystemExit("Please set API_KEY environment variable first")
+    load_local_env_file(ENV_FILE)
 
-    client = TripAdvisorScraperClient(api_key=api_key, base_url=os.getenv("BASE_URL", DEFAULT_BASE_URL))
+    api_key = args.api_key or os.getenv("API_KEY")
+    if not api_key:
+        raise SystemExit("Please set API_KEY in .env, the environment, or pass --api-key")
+
+    base_url = args.base_url or os.getenv("BASE_URL", DEFAULT_BASE_URL)
+    client = TripAdvisorScraperClient(api_key=api_key, base_url=base_url)
 
     print("[0/3] Parsing Hong Kong TripAdvisor entity_id...")
     entity_id = None

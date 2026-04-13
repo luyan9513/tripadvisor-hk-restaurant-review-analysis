@@ -57,6 +57,12 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+Copy `.env.example` to `.env` and fill in your TripAdvisor scraper credentials once:
+
+```bash
+cp .env.example .env
+```
+
 ## Usage
 
 The full pipeline can be run end to end in this order:
@@ -64,17 +70,7 @@ The full pipeline can be run end to end in this order:
 1. Refresh the raw data if needed.
 
 ```bash
-export API_KEY=your_api_key
-python tripadvisor_hk_restaurants_reviews_crawl.py \
-  --query "Hong Kong" \
-  --locale en-US \
-  --currency HKD \
-  --max-rest-pages 10 \
-  --max-review-pages 50 \
-  --sleep 0.6 \
-  --sort-by most_recent \
-  --restaurants-csv data/raw/hongkong_restaurants.csv \
-  --reviews-csv data/raw/hongkong_restaurant_reviews.csv
+python tripadvisor_hk_restaurants_reviews_crawl.py
 ```
 
 2. Build the cleaned and analysis-ready datasets.
@@ -111,20 +107,18 @@ If you only want to refresh the crawler output, use the command above and skip t
 
 ## Optional Data Refresh
 
-If you have a TripAdvisor Scraper API key, you can refresh the raw CSV exports with the crawler:
+If you have a TripAdvisor Scraper API key, you can refresh the raw CSV exports with the crawler.
+
+The crawler reads credentials in this order:
+
+1. `--api-key`
+2. `.env`
+3. shell environment variables
+
+Use `--api-key` only when you want to override the local configuration for a one-off run.
 
 ```bash
-export API_KEY=your_api_key
-python tripadvisor_hk_restaurants_reviews_crawl.py \
-  --query "Hong Kong" \
-  --locale en-US \
-  --currency HKD \
-  --max-rest-pages 10 \
-  --max-review-pages 50 \
-  --sleep 0.6 \
-  --sort-by most_recent \
-  --restaurants-csv data/raw/hongkong_restaurants.csv \
-  --reviews-csv data/raw/hongkong_restaurant_reviews.csv
+python tripadvisor_hk_restaurants_reviews_crawl.py
 ```
 
 Optional filters:
@@ -136,7 +130,7 @@ Optional filters:
 - `--keyword "service"`: filter reviews containing a keyword.
 - `--min-rating N`: limit the restaurant list to places above a minimum rating.
 
-The crawler writes the raw outputs to `data/raw/` and expects `API_KEY` to be set in the environment. You can also set `BASE_URL` if you are using a different scraper endpoint.
+The crawler writes the raw outputs to `data/raw/`. You can also set `BASE_URL` in `.env` or pass `--base-url` if you are using a different scraper endpoint.
 
 ## Generated Outputs
 
