@@ -125,6 +125,30 @@ The crawler reads credentials in this order:
 
 Use `--api-key` only when you want to override the local configuration for a one-off run.
 
+To see every available crawler parameter, run:
+
+```bash
+python tripadvisor_hk_restaurants_reviews_crawl.py --help
+```
+
+The most commonly used parameters are:
+
+- `--query`: search term for the TripAdvisor location, usually `Hong Kong`.
+- `--locale`: language/region setting for the API request.
+- `--currency`: currency code used in restaurant results.
+- `--max-rest-pages`: maximum number of restaurant-list pages to crawl.
+- `--max-review-pages`: maximum number of review pages per restaurant.
+- `--sleep`: pause between requests to reduce rate-limit pressure.
+- `--sort-by`: review ordering, usually `most_recent`.
+- `--lang`: keep reviews in a specific language.
+- `--since`: restrict reviews to a date range starting point.
+- `--rating-is`: restrict reviews to a specific rating.
+- `--traveler-type`: filter by traveler type such as `couples` or `family`.
+- `--keyword`: filter reviews by keyword text.
+- `--min-rating`: restrict the restaurant list to a minimum rating.
+- `--restaurants-csv` and `--reviews-csv`: output file paths for the raw CSV exports.
+- `--base-url`: override the upstream scraper endpoint if needed.
+
 ```bash
 python tripadvisor_hk_restaurants_reviews_crawl.py
 ```
