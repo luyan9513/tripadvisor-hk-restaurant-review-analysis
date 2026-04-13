@@ -11,6 +11,15 @@ This repository contains a reproducible pipeline for collecting, cleaning, analy
 - Benchmark baseline models for five-star review prediction.
 - Generate figures and summary tables for reporting and presentation.
 
+## Methodology
+
+- Data collection starts with TripAdvisor restaurant search and review crawling for Hong Kong restaurants, with raw outputs stored in `data/raw/`.
+- Cleaning and preparation combine restaurant metadata with review text, then normalize text, remove noisy samples, and derive temporal and length-based features.
+- Exploratory analysis focuses on rating distributions, review volume over time, trip type patterns, and price-range effects.
+- Sentiment modeling uses a lexicon-based score, VADER, and NRC-derived emotion ratios to capture interpretable signals beyond raw text.
+- Baseline classifiers compare metadata-only, sentiment-only, text-only, and combined feature sets, with macro F1 as the primary tuning metric and accuracy, ROC-AUC, and average precision as supporting metrics.
+- The final evaluation uses a held-out test split so the reported results reflect generalization rather than training performance.
+
 ## Results / Highlights
 
 - The review corpus is strongly skewed toward 5-star ratings, with 9,693 five-star reviews out of 13,449 total reviews.
